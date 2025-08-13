@@ -1,0 +1,13 @@
+{
+    "recommendations": [
+        "ms-vscode-remote.remote-containers",
+        "shardulm94.trailing-spaces",
+        "llvm-vs-code-extensions.vscode-clangd",
+        "ms-vscode.cpptools",
+        "mcu-debug.debug-tracker-vscode",
+        "marus25.cortex-debug",
+        "cschlosser.doxdocgen",
+        "nordic-semiconductor.nrf-connect-extension-pack",
+        "mylonics.zephyr-ide-extension-pack"
+    ]
+}

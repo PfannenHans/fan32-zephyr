@@ -1,0 +1,45 @@
+stages:
+    - build
+
+default:
+    image: ghcr.io/zephyrproject-rtos/ci-base:latest
+    before_script:
+        # Depending on runner settings there might be leftovers from previous runs
+        # outside of the git repository. Remove these.
+        - if [ -d "../.west" ]; then rm -r "../.west"; fi
+        - west init -l .
+        # Fetch/Update dependencies (might be cached). Only most recent version is needed.
+        - west update -o=--depth=1 -n
+        - west blobs fetch hal_espressif
+        # Install appropriate toolchain
+        - west sdk install --toolchain riscv64-zephyr-elf
+    interruptible: true # cancel if newer pipeline is created
+    # Cache deps
+    cache:
+        when: always # Still valid if script fails
+        key:
+            files:
+              - west.yml # When west.yml changes, a new cache is created.
+        paths:
+            - ../deps
+            - ${HOME}/zephyr-sdk-*
+
+build:
+    stage: build
+    script:
+        # Build for a number of build and board configurations
+        - west build --board ${BOARD} --sysbuild -- -DEXTRA_CONF_FILE=${BUILD_TYPE}.conf
+    parallel:
+        matrix:
+          - BUILD_TYPE: ["debug", "release"]
+            BOARD: ["fan32"]
+    artifacts:
+      untracked: false
+      when: on_success
+      access: all
+      paths:
+        - build/**/*.elf
+        - build/**/*.hex
+        - build/**/*.zip # For DFU
+        - build/**/*manifest.json # For DFU
+    needs: []

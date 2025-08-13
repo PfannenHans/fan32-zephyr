@@ -1,0 +1,152 @@
+/dts-v1/;
+
+#include <espressif/esp32c3/esp32c3_mini_n4.dtsi>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+#include <espressif/partitions_0x0_default.dtsi>
+#include <zephyr/dt-bindings/pwm/pwm.h>
+
+#include "fan32-pinctrl.dtsi"
+
+/ {
+	model = "Fan32";
+	compatible = "espressif,esp32c3";
+	
+	chosen {
+		zephyr,sram = &sram1;
+		zephyr,console = &usb_serial;
+		zephyr,shell-uart = &usb_serial;
+		zephyr,flash = &flash0;
+		zephyr,code-partition = &slot0_partition;
+	};
+	
+	zephyr,user {
+		io-channels = <&adc0 0>, <&adc0 1>;
+	};
+	
+	aliases {
+		watchdog0 = &wdt0;
+	};
+	
+	w1: w1 {
+		compatible = "zephyr,w1-gpio";
+		gpios = <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+		temp0: ds18b20 {
+			compatible = "maxim,ds18b20";
+			family-code = <0x28>;
+			resolution = <12>;
+			status = "okay";
+		};
+	};
+	
+	buttons {
+		compatible = "gpio-keys";
+		fan0_tacho: fan0_tacho {
+			gpios = <&gpio0 2 0>;
+			label = "fan0_tacho";
+		};
+		fan1_tacho: fan1_tacho {
+			gpios = <&gpio0 3 0>;
+			label = "fan0_tacho";
+		};
+	};
+	
+	pwmfans {
+		compatible = "pwm-leds";
+		// Channel refers to order of definiton in pwm instance
+		fan0_pwm: fan0_pwm {
+			label = "fan0_pwm";
+			pwms = <&ledc0 0 PWM_USEC(40) PWM_POLARITY_INVERTED>;
+		};
+		fan1_pwm: fan1_pwm {
+			label = "fan1_pwm";
+			pwms = <&ledc0 1 PWM_USEC(40) PWM_POLARITY_INVERTED>;
+		};
+	};
+	
+	w1-gpio {
+		status = "okay";
+		compatible = "zephyr,w1-gpio";
+		gpios = <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+		temperature_onboard: ds18b20 {
+			status = "okay";
+			compatible = "maxim,ds18b20";
+			resolution = <12>;
+		};
+	};
+	
+	leds {
+		compatible = "gpio-leds";
+		led_0: led_0 {
+			gpios = <&gpio0 20 GPIO_ACTIVE_LOW>;
+		};
+	};
+};
+
+&uart0 {
+	status = "disabled";
+	current-speed = <115200>;
+	pinctrl-0 = <&uart0_default>;
+	pinctrl-names = "default";
+};
+
+&usb_serial {
+	status = "okay";
+};
+
+&spi2 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "okay";
+	pinctrl-0 = <&spim2_default>;
+	pinctrl-names = "default";
+};
+
+&gpio0 {
+	status = "okay";
+};
+
+&wdt0 {
+	status = "okay";
+};
+
+&timer0 {
+	status = "okay";
+};
+
+&adc0 {
+	status = "okay";
+	#address-cells = <1>;
+	#size-cells = <0>;
+	poti0: channel@0 {
+		reg = <0>;
+		zephyr,gain = "ADC_GAIN_1_4";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,resolution = <12>;
+	};
+	poti1: channel@1 {
+		reg = <1>;
+		zephyr,gain = "ADC_GAIN_1_4";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,resolution = <12>;
+	};
+};
+
+&ledc0 {
+	status = "okay";
+	pinctrl-0 = <&ledc0_default>;
+	pinctrl-names = "default";
+	#address-cells = <1>;
+	#size-cells = <0>;
+	fan1_pwm@0 {
+		reg = <0x0>;
+		timer = <0>;
+		inverted;
+	};
+	fan0_pwm@1 {
+		reg = <0x1>;
+		timer = <0>;
+		inverted;
+	};
+};

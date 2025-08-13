@@ -1,0 +1,4 @@
+# Fan32 board configuration
+
+config BOARD_FAN32
+	select SOC_ESP32C3_MINI_N4

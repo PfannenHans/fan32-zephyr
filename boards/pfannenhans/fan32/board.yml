@@ -1,0 +1,6 @@
+board:
+  name: fan32
+  full_name: Fan32
+  vendor: pfannenhans
+  socs:
+  - name: esp32c3

@@ -1,0 +1,29 @@
+{
+	"folders": [
+		{
+			// Git root
+			"path": ".",
+		},
+		{
+			// West workspace root
+			"path": "..",
+		},
+	],
+	"settings": {
+		"nrf-connect.applications": [
+			"${workspaceFolder}"
+		],
+		// Configure the clangd extension
+		"clangd.checkUpdates": true,
+		"clangd.arguments": [
+			"--query-driver=/usr/bin/*gcc*,/usr/local/bin/*gcc*,/usr/bin/clang*/usr/local/bin/clang*",
+			"-background-index",
+			"-compile-commands-dir=${workspaceFolder}/build/app",
+			"--clang-tidy",
+			"--header-insertion=never",
+			"--enable-config",
+		],
+		"cmake.options.statusBarVisibility": "hidden",
+		"python.analysis.exclude": ["deps/**"],
+	},
+}

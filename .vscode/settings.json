@@ -1,0 +1,27 @@
+{
+    // Use the clangd extension as the default formatter
+    "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+    // Automatically format files when saving
+    "editor.formatOnSave": true,
+    // Disable the Microsoft C extension's IntelliSense as it conflicts with clangd
+    "C_Cpp.intelliSenseEngine": "disabled",
+    "cmake.automaticReconfigure": false,
+    "cmake.configureOnOpen": false,
+    "nrf-connect.applications": [
+        "${workspaceFolder}"
+    ],
+    // Configure the clangd extension
+    "clangd.checkUpdates": true,
+    "clangd.arguments": [
+        "--query-driver=/usr/bin/*gcc*,/usr/local/bin/*gcc*,/usr/bin/clang*/usr/local/bin/clang*",
+        "-background-index",
+        "-compile-commands-dir=${workspaceFolder}/build/app",
+        "--clang-tidy",
+        "--header-insertion=never",
+        "--enable-config",
+    ],
+    "cmake.options.statusBarVisibility": "hidden",
+    "[dts]": {
+        "editor.defaultFormatter": "legale.dts-formatter"
+    },
+}

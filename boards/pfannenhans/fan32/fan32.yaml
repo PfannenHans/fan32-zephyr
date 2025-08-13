@@ -1,0 +1,16 @@
+identifier: fan32
+name: Fan32
+type: mcu
+arch: riscv
+toolchain:
+  - zephyr
+supported:
+  - adc
+  - dma
+  - entropy
+  - gpio
+  - pwm
+  - uart
+  - usb
+  - watchdog
+vendor: pfannenhans

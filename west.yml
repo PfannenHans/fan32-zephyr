@@ -1,0 +1,21 @@
+manifest:
+  version: "1.2"
+  self:
+    path: app  # Put project in folder app when cloning via west
+
+  remotes:
+    - name: zephyr
+      url-base: https://github.com/zephyrproject-rtos/
+
+  projects:
+    - name: zephyr
+      description: Zephyr base repository
+      remote: zephyr
+      repo-path: zephyr
+      revision: v4.2.0
+      import:
+        path-prefix: deps
+        name-allowlist:
+            - hal_espressif
+            - mcuboot
+            - picolibc

@@ -1,0 +1,42 @@
+---
+BasedOnStyle: LLVM
+AlignAfterOpenBracket: Align
+AlignOperands: true
+AlignTrailingComments: false
+AlignConsecutiveMacros: false
+AlignEscapedNewlines: DontAlign
+AllowAllArgumentsOnNextLine: true
+AllowAllParametersOfDeclarationOnNextLine: true
+AllowShortBlocksOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: Never
+BreakBeforeBraces: Custom
+BraceWrapping:
+  BeforeElse: true
+ColumnLimit: 0
+DisableFormat: false
+FixNamespaceComments: true
+IndentCaseLabels: false
+# IndentPPDirectives does not properly handle include guards
+IndentPPDirectives: None
+IndentWidth: 4
+Language: Cpp
+MaxEmptyLinesToKeep: 2
+PointerAlignment: Left
+ReflowComments: true
+# SortIncludes true does not work with ST driver include order
+SortIncludes: false
+SpaceAfterCStyleCast: false
+SpaceAfterLogicalNot: false
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeParens: ControlStatements
+SpaceBeforeRangeBasedForLoopColon: true
+SpaceInEmptyParentheses: false
+# SpacesBeforeTrailingComments will affect // comments; /* */ have 1 space before automatically
+SpacesBeforeTrailingComments: 2
+SpacesInAngles: false
+SpacesInCStyleCastParentheses: false
+SpacesInContainerLiterals: false
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+UseTab: Never
+...
