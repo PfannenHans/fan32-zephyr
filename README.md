@@ -1,6 +1,6 @@
 # FAN32 Firmware
 
-Zephyr firmware for local potentiometer controlled fans using my [FAN32 hardware project](https://github.com/PfannenHans/solar-aqi-pod).
+Zephyr firmware for local potentiometer controlled fans using my [FAN32 hardware project](https://github.com/PfannenHans/fan32-hardware).
 
 
 ## Set up west
